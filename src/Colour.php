@@ -274,6 +274,7 @@ class Colour
                 throw new \Exception('$I should always be between 0 and 6 inclusive');
                 break;
     }
+        $hex = [];
         $hex[0] = str_pad(dechex($R), 2, '0', STR_PAD_LEFT);
         $hex[1] = str_pad(dechex($G), 2, '0', STR_PAD_LEFT);
         $hex[2] = str_pad(dechex($B), 2, '0', STR_PAD_LEFT);
