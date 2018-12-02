@@ -32,7 +32,7 @@ class Colour
 
         // Make sure it's 6 digits
         if (strlen($colour) === 3) {
-            $colour = $colour[0].$colour[0].$colour[1].$colour[1].$colour[2].$colour[2];
+            $colour = $colour[0] . $colour[0] . $colour[1] . $colour[1] . $colour[2] . $colour[2];
         } elseif (strlen($colour) != 6) {
             throw new Exception("HEX colour needs to be 6 or 3 digits long");
         }
@@ -48,7 +48,7 @@ class Colour
      */
     public function __toString()
     {
-        return "#".$this->getHex();
+        return "#" . $this->getHex();
     }
 
     public function __get($name)
@@ -134,9 +134,9 @@ class Colour
         $color = self::_checkHex($color);
 
         // Convert HEX to DEC
-        $R = hexdec($color[0].$color[1]);
-        $G = hexdec($color[2].$color[3]);
-        $B = hexdec($color[4].$color[5]);
+        $R = hexdec($color[0] . $color[1]);
+        $G = hexdec($color[2] . $color[3]);
+        $B = hexdec($color[4] . $color[5]);
 
         $HSL = array();
 
@@ -148,7 +148,7 @@ class Colour
         $var_Max = max($var_R, $var_G, $var_B);
         $del_Max = $var_Max - $var_Min;
 
-        $L = ($var_Max + $var_Min)/2;
+        $L = ($var_Max + $var_Min) / 2;
 
         if ($del_Max == 0) {
             $H = 0;
@@ -173,15 +173,15 @@ class Colour
             }
             
 
-            if ($H<0) {
+            if ($H < 0) {
                 $H++;
             }
-            if ($H>1) {
+            if ($H > 1) {
                 $H--;
             }
         }
 
-        $HSL['H'] = ($H*360);
+        $HSL['H'] = ($H * 360);
         $HSL['S'] = $S;
         $HSL['L'] = $L;
 
@@ -200,24 +200,24 @@ class Colour
             throw new Exception("Param was not an HSL array");
         }
 
-        list($H, $S, $L) = array( $hsl['H']/360,$hsl['S'],$hsl['L'] );
+        list($H, $S, $L) = array($hsl['H'] / 360, $hsl['S'], $hsl['L']);
 
         if ($S == 0) {
             $r = $L * 255;
             $g = $L * 255;
             $b = $L * 255;
         } else {
-            if ($L<0.5) {
-                $var_2 = $L*(1+$S);
+            if ($L < 0.5) {
+                $var_2 = $L * (1 + $S);
             } else {
-                $var_2 = ($L+$S) - ($S*$L);
+                $var_2 = ($L + $S) - ($S * $L);
             }
 
             $var_1 = 2 * $L - $var_2;
 
-            $r = round(255 * self::_huetorgb($var_1, $var_2, $H + (1/3)));
+            $r = round(255 * self::_huetorgb($var_1, $var_2, $H + (1 / 3)));
             $g = round(255 * self::_huetorgb($var_1, $var_2, $H));
-            $b = round(255 * self::_huetorgb($var_1, $var_2, $H - (1/3)));
+            $b = round(255 * self::_huetorgb($var_1, $var_2, $H - (1 / 3)));
         }
 
         // Convert to hex
@@ -226,11 +226,11 @@ class Colour
         $b = dechex($b);
 
         // Make sure we get 2 digits for decimals
-        $r = (strlen("".$r)===1) ? "0".$r:$r;
-        $g = (strlen("".$g)===1) ? "0".$g:$g;
-        $b = (strlen("".$b)===1) ? "0".$b:$b;
+        $r = (strlen("" . $r) === 1) ? "0" . $r : $r;
+        $g = (strlen("" . $g) === 1) ? "0" . $g : $g;
+        $b = (strlen("" . $b) === 1) ? "0" . $b : $b;
 
-        return $r.$g.$b;
+        return $r . $g . $b;
     }
 
 
@@ -248,25 +248,25 @@ class Colour
         $K = $V * (1 - $S * (1 - $F));
         //4
         switch ($I) {
-        case 0:
-            list($R, $G, $B) = array($V,$K,$M);
-            break;
-        case 1:
-            list($R, $G, $B) = array($N,$V,$M);
-            break;
-        case 2:
-            list($R, $G, $B) = array($M,$V,$K);
-            break;
-        case 3:
-            list($R, $G, $B) = array($M,$N,$V);
-            break;
-        case 4:
-            list($R, $G, $B) = array($K,$M,$V);
-            break;
-        case 5:
-        case 6: //for when $H=1 is given
-            list($R, $G, $B) = array($V,$M,$N);
-            break;
+            case 0:
+                list($R, $G, $B) = array($V,$K,$M);
+                break;
+            case 1:
+                list($R, $G, $B) = array($N,$V,$M);
+                break;
+            case 2:
+                list($R, $G, $B) = array($M,$V,$K);
+                break;
+            case 3:
+                list($R, $G, $B) = array($M,$N,$V);
+                break;
+            case 4:
+                list($R, $G, $B) = array($K,$M,$V);
+                break;
+            case 5:
+            case 6: //for when $H=1 is given
+                list($R, $G, $B) = array($V,$M,$N);
+                break;
     }
         $hex[0] = str_pad(dechex($R), 2, '0', STR_PAD_LEFT);
         $hex[1] = str_pad(dechex($G), 2, '0', STR_PAD_LEFT);
@@ -287,9 +287,9 @@ class Colour
         $colour = self::_checkHex($colour);
 
         // Convert HEX to DEC
-        $R = hexdec($colour[0].$colour[1]);
-        $G = hexdec($colour[2].$colour[3]);
-        $B = hexdec($colour[4].$colour[5]);
+        $R = hexdec($colour[0] . $colour[1]);
+        $G = hexdec($colour[2] . $colour[3]);
+        $B = hexdec($colour[4] . $colour[5]);
 
         $RGB['R'] = $R;
         $RGB['G'] = $G;
@@ -380,7 +380,7 @@ class Colour
         }
 
         // Return our gradient array
-        return array( "light" => $lightColour, "dark" => $darkColour );
+        return array("light" => $lightColour, "dark" => $darkColour);
     }
 
 
@@ -396,11 +396,11 @@ class Colour
         $colour = ($colour) ? $colour : $this->_hex;
 
         // Calculate straight from rbg
-        $r = hexdec($colour[0].$colour[1]);
-        $g = hexdec($colour[2].$colour[3]);
-        $b = hexdec($colour[4].$colour[5]);
+        $r = hexdec($colour[0] . $colour[1]);
+        $g = hexdec($colour[2] . $colour[3]);
+        $b = hexdec($colour[4] . $colour[5]);
 
-        return (($r*299 + $g*587 + $b*114)/1000 > $lighterThan);
+        return (($r * 299 + $g * 587 + $b * 114) / 1000 > $lighterThan);
     }
 
     /**
@@ -412,14 +412,14 @@ class Colour
     public function isDark($colour = false, $darkerThan = 130)
     {
         // Get our colour
-        $colour = ($colour) ? $colour:$this->_hex;
+        $colour = ($colour) ? $colour : $this->_hex;
 
         // Calculate straight from rbg
-        $r = hexdec($colour[0].$colour[1]);
-        $g = hexdec($colour[2].$colour[3]);
-        $b = hexdec($colour[4].$colour[5]);
+        $r = hexdec($colour[0] . $colour[1]);
+        $g = hexdec($colour[2] . $colour[3]);
+        $b = hexdec($colour[4] . $colour[5]);
 
-        return (($r*299 + $g*587 + $b*114)/1000 <= $darkerThan);
+        return (($r * 299 + $g * 587 + $b * 114) / 1000 <= $darkerThan);
     }
 
     /**
@@ -433,7 +433,7 @@ class Colour
         $hsl = $this->_hsl;
 
         // Adjust Hue 180 degrees
-        $hsl['H'] += ($hsl['H']>180) ? -180:180;
+        $hsl['H'] += ($hsl['H'] > 180) ? -180 : 180;
 
         // Return the new value in HEX
         return self::hslToHex($hsl);
@@ -478,31 +478,31 @@ class Colour
 
         $css = "";
         /* fallback/image non-cover colour */
-        $css .= "{$prefix}background-color: #".$this->_hex.";{$suffix}";
+        $css .= "{$prefix}background-color: #" . $this->_hex . ";{$suffix}";
 
         /* IE Browsers */
-        $css .= "{$prefix}filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#".$g['light']."', endColorstr='#".$g['dark']."');{$suffix}";
+        $css .= "{$prefix}filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#" . $g['light'] . "', endColorstr='#" . $g['dark'] . "');{$suffix}";
 
         /* Safari 4+, Chrome 1-9 */
         if ($vintageBrowsers) {
-            $css .= "{$prefix}background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#".$g['light']."), to(#".$g['dark']."));{$suffix}";
+            $css .= "{$prefix}background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#" . $g['light'] . "), to(#" . $g['dark'] . "));{$suffix}";
         }
 
         /* Safari 5.1+, Mobile Safari, Chrome 10+ */
-        $css .= "{$prefix}background-image: -webkit-linear-gradient(top, #".$g['light'].", #".$g['dark'].");{$suffix}";
+        $css .= "{$prefix}background-image: -webkit-linear-gradient(top, #" . $g['light'] . ", #" . $g['dark'] . ");{$suffix}";
 
         /* Firefox 3.6+ */
         if ($vintageBrowsers) {
-            $css .= "{$prefix}background-image: -moz-linear-gradient(top, #".$g['light'].", #".$g['dark'].");{$suffix}";
+            $css .= "{$prefix}background-image: -moz-linear-gradient(top, #" . $g['light'] . ", #" . $g['dark'] . ");{$suffix}";
         }
 
         /* Opera 11.10+ */
         if ($vintageBrowsers) {
-            $css .= "{$prefix}background-image: -o-linear-gradient(top, #".$g['light'].", #".$g['dark'].");{$suffix}";
+            $css .= "{$prefix}background-image: -o-linear-gradient(top, #" . $g['light'] . ", #" . $g['dark'] . ");{$suffix}";
         }
 
         /* Unprefixed version (standards): FF 16+, IE10+, Chrome 26+, Safari 7+, Opera 12.1+ */
-        $css .= "{$prefix}background-image: linear-gradient(to bottom, #".$g['light'].", #".$g['dark'].");{$suffix}";
+        $css .= "{$prefix}background-image: linear-gradient(to bottom, #" . $g['light'] . ", #" . $g['dark'] . ");{$suffix}";
 
         // Return our CSS
         return $css;
@@ -524,10 +524,10 @@ class Colour
         // Check if we were provided a number
         if ($amount) {
             $hsl['L'] = ($hsl['L'] * 100) - $amount;
-            $hsl['L'] = ($hsl['L'] < 0) ? 0:$hsl['L']/100;
+            $hsl['L'] = ($hsl['L'] < 0) ? 0 : $hsl['L'] / 100;
         } else {
             // We need to find out how much to darken
-            $hsl['L'] = $hsl['L']/2 ;
+            $hsl['L'] = $hsl['L'] / 2;
         }
 
         return $hsl;
@@ -544,10 +544,10 @@ class Colour
         // Check if we were provided a number
         if ($amount) {
             $hsl['L'] = ($hsl['L'] * 100) + $amount;
-            $hsl['L'] = ($hsl['L'] > 100) ? 1:$hsl['L']/100;
+            $hsl['L'] = ($hsl['L'] > 100) ? 1 : $hsl['L'] / 100;
         } else {
             // We need to find out how much to lighten
-            $hsl['L'] += (1-$hsl['L'])/2;
+            $hsl['L'] += (1 - $hsl['L']) / 2;
         }
 
         return $hsl;
@@ -591,16 +591,16 @@ class Colour
             $vH -= 1;
         }
 
-        if ((6*$vH) < 1) {
+        if ((6 * $vH) < 1) {
             return ($v1 + ($v2 - $v1) * 6 * $vH);
         }
 
-        if ((2*$vH) < 1) {
+        if ((2 * $vH) < 1) {
             return $v2;
         }
 
-        if ((3*$vH) < 2) {
-            return ($v1 + ($v2-$v1) * ((2/3)-$vH) * 6);
+        if ((3 * $vH) < 2) {
+            return ($v1 + ($v2 - $v1) * ((2 / 3) - $vH) * 6);
         }
 
         return $v1;
@@ -619,7 +619,7 @@ class Colour
 
         // Make sure it's 6 digits
         if (strlen($colour) == 3) {
-            $colour = $colour[0].$colour[0].$colour[1].$colour[1].$colour[2].$colour[2];
+            $colour = $colour[0] . $colour[0] . $colour[1] . $colour[1] . $colour[2] . $colour[2];
         } elseif (strlen($colour) != 6) {
             throw new Exception("HEX colour needs to be 6 or 3 digits long");
         }
