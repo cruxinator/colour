@@ -270,6 +270,9 @@ class Colour
             case 6: //for when $H=1 is given
                 list($R, $G, $B) = array($V,$M,$N);
                 break;
+            default:
+                throw new \Exception('$I should always be between 0 and 6 inclusive');
+                break;
     }
         $hex[0] = str_pad(dechex($R), 2, '0', STR_PAD_LEFT);
         $hex[1] = str_pad(dechex($G), 2, '0', STR_PAD_LEFT);
@@ -293,7 +296,7 @@ class Colour
         $R = hexdec($colour[0] . $colour[1]);
         $G = hexdec($colour[2] . $colour[3]);
         $B = hexdec($colour[4] . $colour[5]);
-
+        $RGB = [];
         $RGB['R'] = $R;
         $RGB['G'] = $G;
         $RGB['B'] = $B;
@@ -314,7 +317,7 @@ class Colour
         if (empty($rgb) || !isset($rgb['R']) || !isset($rgb['G']) || !isset($rgb['B'])) {
             throw new Exception('Param was not an RGB array');
         }
-
+        $hex = [];
         // Convert RGB to HEX
         $hex[0] = str_pad(dechex($rgb['R']), 2, '0', STR_PAD_LEFT);
         $hex[1] = str_pad(dechex($rgb['G']), 2, '0', STR_PAD_LEFT);
