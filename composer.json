@@ -1,0 +1,26 @@
+{
+    "name": "cruxinator/colour",
+    "description": "Basic Colour Manipulation class similar to System.Drawing.Color from .net",
+    "license": "UnDescided",
+    "authors": [
+        {
+            "name": "Christopher Harris",
+            "email": "c.harris@communicationinnovations.com.au"
+        }
+    ],
+    "require": {
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "cruxinator\\Colours\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\cruxinator\\Colours\\": "tests/"
+        }
+    }
+}
