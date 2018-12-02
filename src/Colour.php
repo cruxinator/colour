@@ -170,6 +170,8 @@ class Colour
                 $H = (1 / 3) + $del_R - $del_B;
             } elseif ($var_B == $var_Max) {
                 $H = (2 / 3) + $del_G - $del_R;
+            } else{
+                $H=0;
             }
             
 
@@ -203,9 +205,9 @@ class Colour
         list($H, $S, $L) = array($hsl['H'] / 360, $hsl['S'], $hsl['L']);
 
         if ($S == 0) {
-            $r = $L * 255;
-            $g = $L * 255;
-            $b = $L * 255;
+            $r = (int) $L * 255;
+            $g = (int) $L * 255;
+            $b = (int) $L * 255;
         } else {
             if ($L < 0.5) {
                 $var_2 = $L * (1 + $S);
@@ -215,9 +217,9 @@ class Colour
 
             $var_1 = 2 * $L - $var_2;
 
-            $r = round(255 * self::_huetorgb($var_1, $var_2, $H + (1 / 3)));
-            $g = round(255 * self::_huetorgb($var_1, $var_2, $H));
-            $b = round(255 * self::_huetorgb($var_1, $var_2, $H - (1 / 3)));
+            $r = (int)round(255 * self::_huetorgb($var_1, $var_2, $H + (1/3)));
+            $g = (int)round(255 * self::_huetorgb($var_1, $var_2, $H));
+            $b = (int)round(255 * self::_huetorgb($var_1, $var_2, $H - (1/3)));
         }
 
         // Convert to hex
