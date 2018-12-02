@@ -188,7 +188,8 @@ class Colour
     public static function hslToHex($hsl = array())
     {
         // Make sure it's HSL
-        if (empty($hsl) || !isset($hsl['H']) || !isset($hsl['S']) || !isset($hsl['L'])) {
+        //if (empty($hsl) || !isset($hsl['H']) || !isset($hsl['S']) || !isset($hsl['L'])) {
+        if (empty($hsl) || (bool)array_diff_key(array_flip(['H','S','L']), $hsl)) {
             throw new Exception('Param was not an HSL array');
         }
 
