@@ -170,8 +170,8 @@ class Colour
                 $H = (1 / 3) + $del_R - $del_B;
             } elseif ($var_B == $var_Max) {
                 $H = (2 / 3) + $del_G - $del_R;
-            } else{
-                $H=0;
+            } else {
+                $H = 0;
             }
             
 
@@ -217,9 +217,9 @@ class Colour
 
             $var_1 = 2 * $L - $var_2;
 
-            $r = (int)round(255 * self::_huetorgb($var_1, $var_2, $H + (1/3)));
-            $g = (int)round(255 * self::_huetorgb($var_1, $var_2, $H));
-            $b = (int)round(255 * self::_huetorgb($var_1, $var_2, $H - (1/3)));
+            $r = (int) round(255 * self::_huetorgb($var_1, $var_2, $H + (1 / 3)));
+            $g = (int) round(255 * self::_huetorgb($var_1, $var_2, $H));
+            $b = (int) round(255 * self::_huetorgb($var_1, $var_2, $H - (1 / 3)));
         }
 
         // Convert to hex
@@ -251,23 +251,23 @@ class Colour
         //4
         switch ($I) {
             case 0:
-                list($R, $G, $B) = array($V,$K,$M);
+                list($R, $G, $B) = array($V, $K, $M);
                 break;
             case 1:
-                list($R, $G, $B) = array($N,$V,$M);
+                list($R, $G, $B) = array($N, $V, $M);
                 break;
             case 2:
-                list($R, $G, $B) = array($M,$V,$K);
+                list($R, $G, $B) = array($M, $V, $K);
                 break;
             case 3:
-                list($R, $G, $B) = array($M,$N,$V);
+                list($R, $G, $B) = array($M, $N, $V);
                 break;
             case 4:
-                list($R, $G, $B) = array($K,$M,$V);
+                list($R, $G, $B) = array($K, $M, $V);
                 break;
             case 5:
             case 6: //for when $H=1 is given
-                list($R, $G, $B) = array($V,$M,$N);
+                list($R, $G, $B) = array($V, $M, $N);
                 break;
     }
         $hex[0] = str_pad(dechex($R), 2, '0', STR_PAD_LEFT);
