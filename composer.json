@@ -1,7 +1,7 @@
 {
     "name": "cruxinator/colour",
     "description": "Basic Colour Manipulation class similar to System.Drawing.Color from .net",
-    "license": "UnDescided",
+    "license": "MIT",
     "authors": [
         {
             "name": "Christopher Harris",
