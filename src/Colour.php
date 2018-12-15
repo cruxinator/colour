@@ -223,15 +223,31 @@ class Colour
         return $r . $g . $b;
     }
 
-
+    /**
+     * Given an HSV associative array, return the equivalent HEX string
+     *
+     * H should be between 0 inclusive and 360 exclusive
+     * S should be between 0 and 1 inclusive
+     * V should be between 0 and 1 inclusive
+     *
+     * @param array $hsv
+     *
+     * @return string
+     */
     public static function hsvToHex(array $hsv)
     {
+        if (3 != count($hsv)) {
+            throw new \InvalidArgumentException('Input array must have 3 elements');
+        }
         list($H, $S, $V) = $hsv;
+        if (0 > $H || 360 <= $H || 0 > $S || 1 < $S || 0 > $V || 1 < $V) {
+            throw new \InvalidArgumentException('One or more of H, S, V out of range');
+        }
         //1
-        $H *= 6;
+        $H /= 60;
         //2
         $I = floor($H);
-        $F = $H - $I;
+        $F = abs(fmod($H, 1));
         //3
         $M = $V * (1 - $S);
         $N = $V * (1 - $S * $F);
@@ -239,28 +255,36 @@ class Colour
         //4
         switch ($I) {
             case 0:
-                list($R, $G, $B) = array($V, $K, $M);
+                list($R, $G, $B) = [$V, $K, $M];
                 break;
             case 1:
-                list($R, $G, $B) = array($N, $V, $M);
+                list($R, $G, $B) = [$N, $V, $M];
                 break;
             case 2:
-                list($R, $G, $B) = array($M, $V, $K);
+                list($R, $G, $B) = [$M, $V, $K];
                 break;
             case 3:
-                list($R, $G, $B) = array($M, $N, $V);
+                list($R, $G, $B) = [$M, $N, $V];
                 break;
             case 4:
-                list($R, $G, $B) = array($K, $M, $V);
+                list($R, $G, $B) = [$K, $M, $V];
                 break;
             case 5:
-            case 6: //for when $H=1 is given
-                list($R, $G, $B) = array($V, $M, $N);
+                list($R, $G, $B) = [$V, $M, $N];
                 break;
             default:
                 throw new \Exception('$I should always be between 0 and 6 inclusive');
                 break;
-    }
+        }
+
+        $round = PHP_ROUND_HALF_ODD;
+        $cap = 255;
+        $mult = 256;
+
+        $R = min($cap, round($R * $mult, $round));
+        $G = min($cap, round($G * $mult, $round));
+        $B = min($cap, round($B * $mult, $round));
+
         $hex = [];
         $hex[0] = str_pad(dechex($R), 2, '0', STR_PAD_LEFT);
         $hex[1] = str_pad(dechex($G), 2, '0', STR_PAD_LEFT);
