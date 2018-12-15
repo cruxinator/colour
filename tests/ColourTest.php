@@ -6,51 +6,83 @@ use PHPUnit\Framework\TestCase;
 
 class ColourTest extends TestCase
 {
-    public function testColourMix()
+    public function colourMixProvider()
     {
-        $expected = [
-                     'ffffff' => array('ff0000','ff7f7f'), // ffffff + ff0000 = ff7f7f
-                     '00ff00' => array('ff0000','7f7f00'),
-                     '000000' => array('ff0000','7f0000'),
-                     '002fff' => array('000000','00177f'),
-                     '00ffed' => array('000000','007f76'),
-                     'ff9a00' => array('000000','7f4d00'),
-                     'ff9a00' => array('ffffff','ffcc7f'),
-                     '00ff2d' => array('ffffff','7fff96'),
-                     '8D43B4' => array('35CF64','61898c'),
-                    ];
-        foreach ($expected as $original => $complementary) {
-            $colour = new Colour($original);
-            $this->assertEquals($complementary[1], $colour->mix($complementary[0]), 'Incorrect mix colour returned.');
-        }
+        return [
+            ['ffffff', 'ff0000', 'ff7f7f'],
+            ['00ff00', 'ff0000', '7f7f00'],
+            ['000000', 'ff0000', '7f0000'],
+            ['002fff', '000000', '00177f'],
+            ['00ffed', '000000', '007f76'],
+            ['ff9a00', '000000', '7f4d00'],
+            ['ff9a00', 'ffffff', 'ffcc7f'],
+            ['00ff2d', 'ffffff', '7fff96'],
+            ['8D43B4', '35CF64', '61898c'],
+        ];
     }
 
-    public function testColourComplementary()
+    /**
+     * @dataProvider colourMixProvider
+     */
+    public function testColourMix($first, $second, $target)
     {
-        $expected = [
-                     'ff0000' => '00ffff',
-                     '0000ff' => 'ffff00',
-                     '00ff00' => 'ff00ff',
-                     'ffff00' => '0000ff',
-                     '00ffff' => 'ff0000',
-                     'ffff00' => '0000ff',
-
-                     '49cbaf' => 'cb4965',
-                     '003eb2' => 'b27400',
-                     'b27400' => '003eb2',
-                     'ffff99' => '9999ff',
-                     'ccff00' => '3300ff',
-                     '3300ff' => 'ccff00',
-                     'fb4a2c' => '2cddfb',
-                     '9cebff' => 'ffb09c',
-                    ];
-
-        foreach ($expected as $original => $complementary) {
-            $colour = new Colour($original);
-            $this->assertEquals($complementary, $colour->complementary(), 'Incorrect complementary colour returned.');
-        }
+        $expected = new Colour($target);
+        $expected = $expected->getHex();
+        $colour = new Colour($first);
+        $actual = $colour->mix($second);
+        $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @dataProvider colourMixProvider
+     */
+    public function testColourMixReverse($first, $second, $target)
+    {
+        $expected = new Colour($target);
+        $expected = $expected->getHex();
+        $colour = new Colour($second);
+        $actual = $colour->mix($first);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function colourComplementProvider()
+    {
+        return [
+            ['ff0000', '00ffff'],
+            ['0000ff', 'ffff00'],
+            ['00ff00', 'ff00ff'],
+            ['ffff00', '0000ff'],
+            ['00ffff', 'ff0000'],
+            ['49cbaf', 'cb4965'],
+            ['003eb2', 'b27400'],
+            ['b27400', '003eb2'],
+            ['ffff99', '9999ff'],
+            ['ccff00', '3300ff'],
+            ['3300ff', 'ccff00'],
+            ['fb4a2c', '2cddfb'],
+            ['9cebff', 'ffb09c']
+        ];
+    }
+
+    /**
+     * @dataProvider colourComplementProvider
+     */
+    public function testColourComplement($original, $complement)
+    {
+        $colour = new Colour($original);
+        $colour = $colour->complementary();
+        $this->assertEquals($complement, $colour);
+    }
+
+    /**
+     * @dataProvider colourComplementProvider
+     */
+    public function testColourComplementReverse($original, $complement)
+    {
+        $colour = new Colour($complement);
+        $colour = $colour->complementary();
+        $this->assertEquals($original, $colour);
+    }
 
     public function testColourChangeDarken()
     {
